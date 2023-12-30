@@ -6,21 +6,21 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int count = 0;	// 자릿수
-        int plus = 1;	// 자릿수에 더하는 값
-        int num = 10;	// 몇 자릿수 더할지 판단
+        int result = 0;
+        int plus = 1;	
+        int ten = 10;	
         int N = Integer.parseInt(br.readLine());
 
         for(int i=1; i<=N; i++) {
-            // 자릿수 바뀌는 조건 => 10, 100, 1000, 10000, ...
-            if(i%num == 0) {
+            
+            if(i % ten == 0) {
                 plus ++;
-                num *= 10;
+                ten *= 10;
             }
-            count += plus;
+            result += plus;
 
         }
-        bw.write(String.valueOf(count));
+        bw.write(String.valueOf(result));
         bw.flush();
     }
 }
