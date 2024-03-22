@@ -23,17 +23,25 @@ public class Main {
             coordinate.add(point);
         }
 
-        Collections.sort(coordinate);
+        Collections.sort(coordinate, (a,b) -> {
+            if (a.getX() > b.getX()) {
+                return 1;
+            } else if (a.getX() == b.getX()) {
+                if (a.getY() > b.getY()) {
+                    return 1;
+                }
+            }
+            return -1;
+        });
 
         coordinate.forEach((p) -> {
             sb.append(p.toString()).append("\n");
         });
-
         System.out.println(sb);
     }
 }
 
-class Point implements Comparable<Point>{
+class Point{
     int x;
     int y;
 
@@ -46,34 +54,13 @@ class Point implements Comparable<Point>{
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     @Override
     public String toString() {
         return x + " " + y;
-    }
-
-    @Override
-    public int compareTo(Point p) {
-
-        if (this.x > p.x) {
-            return 1;
-        } else if (this.x == p.x) {
-            if (this.y > p.y) {
-                return 1;
-            }
-        }
-        return -1;
     }
 }
 
