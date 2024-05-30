@@ -19,8 +19,14 @@ class Main{
 
 
         for(int i=0; i<n; i++){
-            while(!deque.isEmpty() && arr[deque.peek()] < arr[i]) {
-                arr[deque.pop()] = arr[i];
+            int value = arr[i];
+
+            while(!deque.isEmpty()){
+                if(arr[deque.peekFirst()] < value){
+                    arr[deque.pollFirst()] = value;
+                }else{
+                    break;
+                }
             }
             deque.addFirst(i);
         }
