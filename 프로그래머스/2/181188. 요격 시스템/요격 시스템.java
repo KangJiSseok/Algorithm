@@ -23,7 +23,7 @@ class Solution {
         int head = targets[0][1];
         int result = 1;
         
-        for(int i=0; i< targets.length; i++){
+        for(int i=1; i< targets.length; i++){
             int currentTail = targets[i][0];
             int currentHead = targets[i][1];
             
