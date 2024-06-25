@@ -69,30 +69,24 @@ class Main {
                 exist = robot.get(i);
                 hp = containerHP.get(i + 1);
                 if (exist == 1 && hp > 0 && robot.get(i+1) == 0) {
-                    containerHP.remove(i + 1);
-                    containerHP.add(i + 1, hp - 1);
+                    containerHP.set(i + 1, hp - 1);
                     if(hp-1 == 0) count++;
-                    robot.remove(i);
-                    robot.add(i, 0);
-                    robot.remove(i + 1);
-                    robot.add(i + 1, 1);
+                    robot.set(i,0);
+                    robot.set(i+1, 1);
                 }
             }
 
 
             if (robot.get(N - 1) == 1) {
-                robot.remove(N - 1);
-                robot.add(N - 1, 0);
+                robot.set(N - 1, 0);
             }
 
             //0번 index 에 내구도가 0 이상, 로봇이 탑승 안해있으면
             exist = robot.get(0);
             hp = containerHP.get(0);
             if (exist == 0 && hp > 0) {
-                robot.remove(0);
-                robot.add(0, 1);
-                containerHP.remove(0);
-                containerHP.add(0, hp - 1);
+                robot.set(0, 1);
+                containerHP.set(0, hp - 1);
                 if(hp-1 == 0) count++;
             }
         }
