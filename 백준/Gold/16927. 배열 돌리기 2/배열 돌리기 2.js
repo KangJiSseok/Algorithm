@@ -1,22 +1,20 @@
 let fs = require('fs');
-let input = fs.readFileSync('/dev/stdin').toString().split('\n');
+let input = fs.readFileSync('dev/stdin').toString().split('\n');
 const [N,M,R] = input[0].split(" ").map((x) => +x);
 // const data = input[i].split("").map((x) => x.toString());
 
 const array =[];
-const resultArray = [];
+const resultArray =[];
 
 function init(){
     for(let i=0; i<N; i++){
         const arr = input[i + 1].split(" ").map((x) => +x);
         array[i] = [];
+        resultArray[i] = [];
         for(let k=0; k<M; k++){
             array[i][k] = arr[k];
+            resultArray[i][k] = arr[k];
         }
-    }
-
-    for(let i=0; i<N; i++){
-        resultArray[i] =[];
     }
 }
 
