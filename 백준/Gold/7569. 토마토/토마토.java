@@ -97,13 +97,8 @@ class Main {
                     if (visit[nextZ][nextY][nextX] == 0) {
                         //익은토마토일 경우 전파할때 day는 증가하지 않음.
                         //가장자리까지 일단 가야하기 때문.
-                        if (tomato[nextZ][nextY][nextX] == 1) {
-                            visit[nextZ][nextY][nextX] = 1;
-                            day[nextZ][nextY][nextX] = day[poll[0]][poll[1]][poll[2]];
-                            queue.add(new int[]{nextZ, nextY, nextX});
-                        }
                         //안익은 토마토일 경우 익은토마토로 바꾸고 그 자리는 day + 1
-                        else if (tomato[nextZ][nextY][nextX] == 0) {
+                        if (tomato[nextZ][nextY][nextX] == 0) {
                             visit[nextZ][nextY][nextX] = 1;
                             tomato[nextZ][nextY][nextX] = 1;
                             day[nextZ][nextY][nextX] = day[poll[0]][poll[1]][poll[2]] + 1;
