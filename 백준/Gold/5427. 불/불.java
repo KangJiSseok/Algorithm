@@ -13,6 +13,7 @@ class Main {
     static int[][] personVisit;
     static int[][] fireVisit;
     static Queue<int[]> fireQueue;
+    static Queue<int[]> personQueue;
     static int[] dx = {-1, 0, 0, 1};
     static int[] dy = {0, -1, 1, 0};
 
@@ -29,13 +30,13 @@ class Main {
     static void solution() throws IOException {
         // 초기화
         fireQueue = new LinkedList<>();
+        personQueue = new LinkedList<>();
         st = new StringTokenizer(br.readLine());
         int w = Integer.parseInt(st.nextToken());
         int h = Integer.parseInt(st.nextToken());
         building = new char[h][w];
         personVisit = new int[h][w];
         fireVisit = new int[h][w];
-        int startX = -1, startY = -1;
 
         for (int i = 0; i < h; i++) {
             String text = br.readLine();
@@ -45,14 +46,13 @@ class Main {
                     fireQueue.add(new int[]{i, j});
                     fireVisit[i][j] = 1;
                 } else if (building[i][j] == '@') {
-                    startY = i;
-                    startX = j;
+                    personQueue.add(new int[]{i,j});
                     personVisit[i][j] = 1;
                 }
             }
         }
 
-        int result = bfs(h, w, startY, startX);
+        int result = bfs(h, w);
         if (result == -1) {
             sb.append("IMPOSSIBLE\n");
         } else {
@@ -60,9 +60,7 @@ class Main {
         }
     }
 
-    private static int bfs(int h, int w, int startY, int startX) {
-        Queue<int[]> personQueue = new LinkedList<>();
-        personQueue.add(new int[]{startY, startX});
+    private static int bfs(int h, int w) {
 
         while (!personQueue.isEmpty()) {
             int fireSize = fireQueue.size();
