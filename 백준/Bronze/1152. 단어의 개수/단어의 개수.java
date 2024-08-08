@@ -1,20 +1,19 @@
-import java.io.*;
-import java.util.StringTokenizer;
-
+import java.util.Scanner;
 
 public class Main {
-    static String result ="";
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        // StringBuilder에 하나씩 붙여놓고 한 번에 출력하기
+    //Q. 영어 대소문자와 공백으로 이루어진 문자열이 주어진다.
+    // 이 문자열에는 몇 개의 단어가 있을까? 이를 구하는 프로그램을 작성하시오.
+    // 단, 한 단어가 여러 번 등장하면 등장한 횟수만큼 모두 세어야 한다.
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int result = 0;
-        while (st.hasMoreTokens()) {
-            st.nextToken();
-            result++;
+        String str  = sc.nextLine();
+
+        if(str.trim().isEmpty()){
+            System.out.println(0);
+        }else{
+            String [] words = str.trim().split("\\s+");
+            System.out.println(words.length);
         }
-        System.out.println(result);
     }
 }
