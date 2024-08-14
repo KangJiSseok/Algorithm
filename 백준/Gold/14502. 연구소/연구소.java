@@ -6,7 +6,7 @@ public class Main {
     static int[][] room;
     static int N;
     static int M;
-    static int[][] roomVisit;
+    static int[] oneList;
     static int[][] wall = new int[3][2];
     static int[] dx = {-1,0,0,1};
     static int[] dy = {0,-1,1,0};
@@ -22,7 +22,7 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
 
         room = new int[N][M];
-        roomVisit = new int[N][M];
+        oneList = new int[N*M];
 
         for(int i=0; i<N; i++){
             st= new StringTokenizer(br.readLine());
@@ -31,13 +31,20 @@ public class Main {
             }
         }
 
-        dfs(0);
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                oneList[i * M + j] = room[i][j];
+            }
+        }
+
+
+        dfs(0, 0);
 
         System.out.println(max);
         
     }
 
-    static void dfs(int depth){
+    static void dfs(int depth, int n){
 
         if(depth == 3){
 //            System.out.println(wall[0][0]+ " " + wall[0][1] + " " + wall[1][0] + " " + wall[1][1] + " " + wall[2][0] + " " + wall[2][1]);
@@ -47,14 +54,10 @@ public class Main {
         }
 
 
-        for(int i=0; i<N; i++){
-            for(int j=0; j<M; j++){
-                if(roomVisit[i][j] == 0 && room[i][j] == 0){
-                    roomVisit[i][j] = 1;
-                    wall[depth] = new int[]{i,j};
-                    dfs(depth + 1);
-                    roomVisit[i][j] = 0;
-                }
+        for(int i=n; i<N*M; i++){
+            if(oneList[i] == 0){
+                wall[depth] = new int[]{i / M, i % M};
+                dfs(depth + 1, i + 1);
             }
         }
     }
