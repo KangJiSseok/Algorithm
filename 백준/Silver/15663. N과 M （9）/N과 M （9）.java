@@ -10,7 +10,6 @@ public class Main {
     static int[] result;
     static int N;
     static int M;
-    static LinkedHashSet<String> set = new LinkedHashSet<>();
     static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
@@ -32,25 +31,24 @@ public class Main {
         Arrays.sort(arr);
 
         dfs(0, 0);
+        System.out.println(sb.toString());
 
-        for (String s : set) {
-            System.out.println(s);
-        }
     }
 
     static void dfs(int index, int depth) {
+        int prev = 0;
 
         if (depth == M) {
             for (int i = 0; i < M; i++) {
                 sb.append(result[i] + " ");
             }
-            set.add(String.valueOf(sb));
-            sb.setLength(0);
+            sb.append("\n");
             return;
         }
 
         for (int i = 0; i < N; i++) {
-            if (visit[i] == 0) {
+            if (visit[i] == 0 && prev != arr[i]) {
+                prev = arr[i];
                 visit[i] = 1;
                 result[index] = arr[i];
                 dfs(index + 1, depth + 1);
