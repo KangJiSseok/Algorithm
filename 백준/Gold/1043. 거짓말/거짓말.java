@@ -1,102 +1,65 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.StringTokenizer;
 
 public class Main {
+    static int[] p = new int[51];
+    static int[][] party = new int[51][52];
+    static boolean[] truth = new boolean[51];
 
-    static int[] parent;
-    static int M;
-    static int N;
-    static HashMap<Integer, Integer> factMap = new HashMap();
-    static List<List<Integer>> list = new ArrayList<>();
-    static int result = 0;
+    public static int find(int c) {
+        if (p[c] == c) {
+            return c;
+        }
+        return p[c] = find(p[c]);
+    }
+
+    public static void merge(int a, int b) {
+        int p1 = find(a);
+        int p2 = find(b);
+
+        if (truth[p1]) {
+            p[p2] = p1;
+        } else {
+            p[p1] = p2;
+        }
+    }
 
     public static void main(String[] args) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer st;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-        st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
-
-        parent = new int[N + 1];
         for (int i = 1; i <= N; i++) {
-            parent[i] = i;
+            p[i] = i;
         }
 
         st = new StringTokenizer(br.readLine());
-        int factSize = Integer.parseInt(st.nextToken());
-        for (int i = 1; i <= factSize; i++) {
-            int value = Integer.parseInt(st.nextToken());
-            factMap.put(value,value);
+        int T = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < T; i++) {
+            int n = Integer.parseInt(st.nextToken());
+            truth[n] = true;
         }
 
+
         for (int i = 0; i < M; i++) {
-            List<Integer> people = new ArrayList<>();
             st = new StringTokenizer(br.readLine());
-            int iter = Integer.parseInt(st.nextToken());
-            for (int j = 0; j < iter; j++) {
-                people.add(Integer.parseInt(st.nextToken()));
+            int n = Integer.parseInt(st.nextToken());
+            for (int j = 0; j < n; j++) {
+                party[i][j] = Integer.parseInt(st.nextToken());
+                merge(party[i][0], party[i][j]);
             }
-            list.add(i, people);
         }
 
-        //union find 시작
+        int ans = M;
         for (int i = 0; i < M; i++) {
-            List<Integer> participants = list.get(i);
-            for (int j = 0; j < participants.size() - 1; j++) {
-                union(participants.get(j), participants.get(j + 1));
+            if (truth[find(party[i][0])]) {
+                ans--;
             }
         }
 
-//        for (int i : parent) {
-//            System.out.println(i + " ");
-//        }
-//
-//        for (Map.Entry<Integer, Integer> integerIntegerEntry : factMap.entrySet()) {
-//            System.out.println("key : " + integerIntegerEntry.getKey() + ", value : "+integerIntegerEntry.getValue() );
-//        }
-
-        for (List<Integer> participants : list) {
-            boolean cascade = true;
-            for (Integer participant : participants) {
-                if (factMap.containsKey(find(participant))) {
-                    cascade = false;
-                    break;
-                }
-            }
-            if (cascade) {
-                result++;
-            }
-        }
-        System.out.println(result);
-    }
-    
-    private static void union(int a, int b) {
-        int findA = find(a);
-        int findB = find(b);
-
-        if (findA == findB) return;
-
-        if (factMap.containsKey(findA) || factMap.containsKey(findB)) {
-            factMap.put(findA, findA);
-            factMap.put(findB, findA);
-        }
-
-        if (findA < findB) {
-            parent[findB] = findA;
-        } else {
-            parent[findA] = findB;
-        }
-    }
-
-
-    private static int find(int n) {
-        if (parent[n] == n) {
-            return n;
-        }
-        return parent[n] = find(parent[n]);
+        System.out.println(ans);
     }
 }
