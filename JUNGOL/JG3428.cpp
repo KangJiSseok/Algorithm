@@ -1,57 +1,37 @@
 #include <iostream>
 #include <vector>
-#include <queue>
-#include <algorithm>
-
-
 using namespace std;
 
+int solution(int n, vector<int> stations, int w)
+{
+    int answer = 0;
 
-int N, M, X;
-vector<vector<int>> graph;
-vector<vector<int>> reverseGraph;
+    int cur = 0;
 
 
-int BFS(vector<vector<int>> &g){
-    int cnt = 0;
+    for(int station : stations){
+        int coverage = station - cur - w - 1;
 
-    vector<bool> visited(N + 1, false);
-
-    queue<int> q;
-    q.push({X});
-    visited[X] = true;
-
-    while(!q.empty()){
-        int x = q.front(); q.pop();
-        cnt++;
-
-        for(int nx : g[x]){
-            if(!visited[nx]){
-                visited[nx] = true;
-                q.push({nx});
-            }
+        if(coverage > 0){
+            answer += (coverage + ((w * 2 + 1) - 1)) / (w * 2 + 1);
         }
+        
+        cur = station + w;
+        
     }
 
-    return cnt;
-}
-
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    
-    cin >> N >> M >> X;
-
-    graph.resize(N + 1);
-    reverseGraph.resize(N + 1);
-
-    for(int i = 0; i < M; i++){
-        int a, b;
-        cin >> a >> b;
-        graph[a].push_back(b);
-        reverseGraph[b].push_back(a);
+    if(cur <= n){
+        int coverage = n - cur;
+        answer += (coverage + ((w * 2 + 1) - 1)) / (w * 2 + 1);
     }
 
-    cout << BFS(reverseGraph) << " ";
-    cout << N - BFS(graph) + 1 << "\n";
+    return answer;
 }
+
+/**
+ * 
+ * 1    2   3   4   5   6   7   8   9   10  11  12  13  14  15
+ *                              x               x
+ *                          o   o   o       o   o   o
+ *          12 - 9 - 1 - 1
+ */
